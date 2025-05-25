@@ -1,63 +1,85 @@
-Emmet -> html:5
+npm - manages packages, but it does not stand for node package manager, standard repository for all packages
 
-React JS -> JS library for building user interface, works with existing apps,
- used to build large scale applications
+package.json - a configuration for npm, keeps track of which version of that package is installed in your system, uses tilde or carat before version
 
-Hello world using html:
-<div id="root">
-<h1>H1 using html</h1>
-</div>
+packages/dependencies
 
-Hello world using JS:
-<div id="root"> </div>
-<script>
-const heading = document.createElement("h1");
-heading.innerHTML="H1 using JS";
-const root=document.getElementById("root");
-root.appendChild(heading);
-</script>
+bundlers - bundles/packages you app, so that it can be pushed to production..eg: webpack,parcel,vite,babel
 
-CDN links -> content delivery network -> place where react library is hosted
+two types of dependencies:
+1) Dev - required for develeopment phase
+2) Normal - used in production also
 
-1) React.JS files -> contains core of react code
-2) ReactDOM.JS files -> used for DOM operations (most expensive)
+1) To install npm: npm init (package.json file is created)
+2) To install parcel: npm install -D parcel (package-lock.json and node modules file is created)
+3) npx parcel index(source file).html -> it builds a development build (which is put inside dist folder) for our app and it hosts the buid in localhost:1234,,
+dist and parcel-cache folders are created
+4) npm install react (or) npm i react
+5) npm install react-dom (or) npm i react-dom
 
-<div id="parent">
-    <div id="child1">
-        <h1>h1 tag</h1>
-        <h2>h2 tag</h2>
-    </div>
-    <div id="child2">
-        <h1>h1 tag</h1>
-        <h2>h2 tag</h2>
-    </div>
-</div>
+npm-> installing a package
+npx -> executing a package
 
-React.createelement - creates a JS object, takes three parameters
-1) name of the tag
-2) attributes to the tag
-3) childrens(one children, pass it as a normal react element or 
- pass it is an array in case of siblings)
+carat(^) vs tilde(~):
+2.15.3 ->(2-major,15-minor,3-patch): 
+carat -> update you to all future minor/patch versions, without incrementing the major version (2.x.x)
+tilde -> update you to all future patch versions, without incrementing the minor version (2.15.x)
 
-for nested html structure -> pass the reactelement (child) as the 3rd parameter
-for siblings -> pass the 3rd arhument as array of childrens
+package-lock.json - keeps track of exact version of all packages,, keeps a hash(sha-512) to verify whatever is there in the dev machine is the same version that is being deployed on to the production
 
-render function - takes the JS obj, create a h1/div tag which the browser understands 
-and puts them inside the root element
+node modules - collrction of packages (or) its a database that contains actual data of that packages/dependencies,, its huge
 
-props - children + attributes
+transitive dependencies - our project is dependent on parcel, parcel as a package is dependent on a dependency -> node modules
 
-order of files is important (app.js should be below CDN links)
+gitignore= - contains all the files which need not to be pushed to github
 
-root.render -> replaces the tags which we pass by bypassing/replacing whatever is
- already present in the root
+dont push node modules inside github, move it to gitignore. Reason - if u have package and package-lock.json files , u can recreate node modules using command - npm install
 
- cross-origin
+push package.json and package-lock.json files to github
 
- can script tag  be written inside head tag
+whatever u can regenarate dont move those to github
 
- library(React) vs framework(Angular)
+ways to get react into our app:
+1) CDN links (not prefereed) -> costly operation (network call to unpkg.com)
+2) NPM
 
-JSX
+After instaling react and react=dom if u run the script- React is not defined err-> solution need to import react and react-dom from node modules where react and react-dom folders are present.
 
-github(client) is a place which can host git repositories, both are different
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+after writing imports, if u run the script -> err: Browser scripts cannot have imports or exports.
+
+sol: <script src="./App.js"> ..it consider this a normal JS file and thereby normal js files cant have imports and hence the error....we have to mention this as a module to solve the issue
+script type="module" src="./App.js">
+
+Features of parcel:
+Dev build
+local server
+Hot module replacement- automatically refreshes the browser
+file watching algorithm (written in C++)
+caching- faster builds using parcel-cache
+image optimization (costlier operation in browser)
+minification
+bundling and optimization
+compressing
+consistent hashing
+code splitting
+differential bundling - to support older browsers
+diagnostics
+error handling
+HTTPs
+tree shaking - removes unused code
+lazy mode
+Different dev and prod bundles
+
+your app is faster not just beacause of React, instead these bundlers like (parcel,vite,webpack) make it faster
+
+production build - npx parcel build index.html; -> after compressing/minification and much more, it goes to dist folder
+development build - npx parcel index.html;
+
+dist and .parcel-cache need not be moved to github as they can be regenreated using npx parcel index.html;
+
+we push the code from local to git,, server fetches it from git,,server host the app to end user
+
+broweserslist
