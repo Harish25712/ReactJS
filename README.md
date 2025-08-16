@@ -1,26 +1,42 @@
- Props.
- Short form for properties. To dynamically send data to a 
-component we use props. Passing a prop to a function is like 
-passing an argument to a function
+create a source folder -> src 
+place every components inside a component folder -> not mandatory
+Never keep hard coded data in components, place it inside a folder -> utils/common/config -> constants.js file
 
-Config Driven UI.
+export and import components
 
- It is a user Interface that is built and configured using a 
-declaration configuration file or data structure, rather than 
-being hardcoded.
- Config is the data coming from the api which keeps on changing 
-according to different factors like user, location, etc.
+default export syntax -> export default componentname;
+default import syntax -> import componentname from path
 
+default import/export vs named import/export
 
-Unique Key id while using map
+a file cannot have more than one default exports
 
-Each item in the list must be uniquely identified
- Why?
- When we have components at same level and if a new component 
-comes on the first without ID, DOM is going to re-render all the 
-components again. As DOM can’t identify where to place it. 
-But if we give each of them a unique ID then react knows where 
-to put that component according to the ID. It is a good 
-optimization and performance thing. 
+to export multiple things from a same file u should use -> named exports
 
-Note* Never use index as keys in map. It is not recommended.
+named export syntax -> export const componentname;
+named import syntax -> import {componentname} from path
+
+React Hooks: A normal JS utility functions
+             keeps the UI layer in sync with data layer
+
+useState() -> superpowerful state variables -> maintains state of the component -> scope is inside that component
+
+UseEffect()
+
+whenever a state variable updates, react re renders the component (by finding out the differnce between virtual dom's and update the dom)
+
+React Algorithm:
+
+Reconcillation Algorithm (or) React fiber (React 16) -> new way of finding the div and updating the dom
+
+actual dom -> <div>
+                  <div>
+                     <img>
+
+Virtual DOM -> object representation of actual dom
+
+Diff Algorithm -> finds out the difference between updated(new) virtual dom and previous(old) virtual dom and then it updates the actual dom/UI 
+
+incremental rendering -> 
+
+React is fast -> efficient dom manipulation through virtual dom, diff algorithm

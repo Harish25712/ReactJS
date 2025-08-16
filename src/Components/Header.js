@@ -1,0 +1,21 @@
+import { CDN_URL } from "../utils/constants";
+
+const Header = () =>{
+  return(
+    <div className="head">
+      <div className="img">
+        <img className="img-src" src={CDN_URL}></img>
+      </div>
+      <div className="nav-items">
+       <ul>
+        <li>Home</li>
+        <li>About us</li>
+        <li>Contact Us</li>
+        <li>Cart</li>
+       </ul>
+      </div>
+    </div>
+  )
+}
+
+export default Header;
