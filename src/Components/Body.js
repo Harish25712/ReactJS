@@ -1,6 +1,8 @@
 import RestaurantCard from "./RestaurantCard"
 import { useEffect, useState } from "react"
 import Shimmer from "./Shimmer.js";
+import { Link } from "react-router";
+import { RESTAURANT_URL } from "../utils/constants.js";
 
 const Body = () =>{
     //local state variable - super powerful variable
@@ -78,7 +80,7 @@ fetchingData();
  // fetch will return a promise  resolve it using async await 
 
 const fetchingData = async () =>{
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9648016&lng=80.1533575&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const data = await fetch(RESTAURANT_URL);
     const json = await data.json();
     // console.log(json);
     setupdatebtn(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); // optional chaining
@@ -104,7 +106,7 @@ const fetchingData = async () =>{
         </div> 
         </div>
       <div className="res-container">
-      {filterbtn.map((res)=><RestaurantCard key={res.info.id} resData = {res}/>)}
+      {filterbtn.map((res)=><Link key={res.info.id} to={"/restaurants/"+res.info.id}><RestaurantCard  resData = {res}/></Link>)}
      </div>
     </div>
   )
