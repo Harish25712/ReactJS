@@ -47,3 +47,39 @@ width:200px;
     margin: 5px;
     cursor: pointer;
 }
+
+.shimmer-container{
+    display: flex;
+    flex-wrap:wrap;
+}
+
+.shimmer-card{
+    width: 300px;
+    height: 400px;
+    background-color:#f0f0f0;
+    padding: 5px;
+    margin: 5px;
+}
+
+.log-btn{
+    margin-right: 15px;
+   padding: 20px;
+}
+
+.buttons{
+    display: flex;
+}
+
+ .filter{
+      padding: 5px;
+      margin: 5px;
+}
+
+.filter-logic{
+      margin-left: 5px;
+}
+
+.filter-btn{
+      margin-left: 10px;
+}
+ 

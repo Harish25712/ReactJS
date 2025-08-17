@@ -1,10 +1,12 @@
 import RestaurantCard from "./RestaurantCard"
-import resList from "../utils/mockData.js"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import Shimmer from "./Shimmer.js";
 
 const Body = () =>{
     //local state variable - super powerful variable
-    const[updatebtn,setupdatebtn]=useState(resList);
+    const[updatebtn,setupdatebtn]=useState([]);
+    const[filterbtn,setfilterbtn]=useState([]);
+    const[searchtext,setsearchtext]=useState("");
 
      /* This can also be written as: -> Array destructring
    const arr = useState(resList);
@@ -69,16 +71,40 @@ const Body = () =>{
    }    
 }]; */
 
-  return(
+useEffect(()=>{
+fetchingData();
+},[]);
+
+ // fetch will return a promise  resolve it using async await 
+
+const fetchingData = async () =>{
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9648016&lng=80.1533575&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const json = await data.json();
+    // console.log(json);
+    setupdatebtn(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); // optional chaining
+    setfilterbtn(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+}
+
+// conditional rendering
+  return updatebtn.length===0?<Shimmer/>:(
     <div className="body">
+        <div className="buttons">
          <div className="filter">
+            <input type="text" value={searchtext} onChange={(e)=>setsearchtext(e.target.value)}></input>
+            <button className="filter-logic" onClick={()=>{
+            const update= updatebtn.filter((res) => res.info.name.toLowerCase().includes(searchtext.toLowerCase()));
+                setfilterbtn(update);
+            }}>Search</button>
+            </div>
+            <div className="filter=res">
             <button className="filter-btn" onClick={()=>{
                 const filterRestaurant = updatebtn.filter((res) => res.info.avgRating>4.5);
-                setupdatebtn(filterRestaurant);
+                setfilterbtn(filterRestaurant);
             }}>Top rated restaurants</button>
         </div> 
+        </div>
       <div className="res-container">
-      {updatebtn.map((res)=><RestaurantCard key={res.info.id} resData = {res}/>)}
+      {filterbtn.map((res)=><RestaurantCard key={res.info.id} resData = {res}/>)}
      </div>
     </div>
   )
